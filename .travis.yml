@@ -1,0 +1,15 @@
+language: java
+sudo: false
+
+jdk:
+  - oraclejdk8
+script: mvn clean verify
+
+notifications:
+  email:
+    recipients:
+      - holysz.monika@gmail.com
+      - andrzej.kimel@gmail.com
+    on_success: change
+    on_failure: always
+
