@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/pet-vet-full.jar
+web: java -Dserver.port=$PORT -Ddb.host=DB_HOST -Ddb.port=DB_PORT -Ddb.schema=DB_SCHEMA -Ddb.user=DB_USER -Ddb.password=DB_PASSWORD -jar target/pet-vet-full.jar
