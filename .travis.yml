@@ -13,3 +13,7 @@ notifications:
     on_success: change
     on_failure: always
 
+deploy:
+  provider: heroku
+  app: $HEROKU_APP_NAME
+  api_key: $HEROKU_API_KEY%
