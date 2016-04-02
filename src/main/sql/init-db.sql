@@ -1,0 +1,8 @@
+
+CREATE TABLE visits (
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     visitDate TIMESTAMP NOT NULL,
+     name VARCHAR(100) NOT NULL,
+     species VARCHAR(100) NOT NULL,
+     purpose MEDIUMTEXT
+);
