@@ -38,13 +38,13 @@ public class Main {
         visit1.setPurpose("recognition");
 
         Visit visit2 = new Visit();
-        visit2.setDate(LocalDateTime.of(2016,4,10,15,30));
+        visit2.setDate(LocalDateTime.of(2016,4,9,10,30));
         visit2.setName("Surname2");
         visit2.setSpecies("cat");
         visit2.setPurpose("recognition");
 
         Visit visit3 = new Visit();
-        visit3.setDate(LocalDateTime.of(2016,4,10,15,30));
+        visit3.setDate(LocalDateTime.of(2016,4,13,14,0));
         visit3.setName("Surname1");
         visit3.setSpecies("dog");
         visit3.setPurpose("recognition");
@@ -55,6 +55,7 @@ public class Main {
         visitList.add(visit1);
         visitList.add(visit2);
         visitList.add(visit3);
+        visitList.sort((v1, v2) -> v1.getDate().compareTo(v2.getDate()));
 
         get("/visit", (reg,res) -> visitList);
     }
