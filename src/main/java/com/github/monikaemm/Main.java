@@ -1,5 +1,5 @@
 package com.github.monikaemm;
-
+import static spark.Spark.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +10,6 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("test");
 
-        List<String> myList = new ArrayList<>();
-        myList.add("Hello");
-        myList.add("World");
-        myList.stream()
-                .map(s -> s.toUpperCase())
-                .forEach(s -> System.out.println(s));
+        get("/hello", (req,res) -> "Hello World");
     }
 }
