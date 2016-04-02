@@ -58,10 +58,16 @@ public class Main {
         visitList.sort((v1, v2) -> v1.getDate().compareTo(v2.getDate()));
 
   //      get("/visit", (reg,res) -> visitList);
-        get("/visit", (req, res) -> {
+        get("/registering_visit", (req, res) -> {
             Map<String, Object> visitModel = new HashMap<>();
-            visitModel.put("visits", visitList);
-            return new ModelAndView(visitModel, "visit");
+            visitModel.put("registering_visits", visit1);
+            return new ModelAndView(visitModel, "registering_visit");
+        }, templateEngine);
+
+        get("/visit", (req, res) -> {
+            Map<String, Object> registering_visitModel = new HashMap<>();
+            registering_visitModel.put("visits", visitList);
+            return new ModelAndView(registering_visitModel, "visit");
         }, templateEngine);
     }
 }
