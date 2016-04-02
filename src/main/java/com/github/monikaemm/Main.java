@@ -1,4 +1,5 @@
 package com.github.monikaemm;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,23 +34,22 @@ public class Main {
         }, templateEngine);
 
         Visit visit1 = new Visit();
-        visit1.setDate(LocalDateTime.of(2016,4,10,15,30));
+        visit1.setDate(LocalDateTime.of(2016, 4, 10, 15, 30));
         visit1.setName("Surname1");
         visit1.setSpecies("dog");
         visit1.setPurpose("recognition");
 
         Visit visit2 = new Visit();
-        visit2.setDate(LocalDateTime.of(2016,4,9,10,30));
+        visit2.setDate(LocalDateTime.of(2016, 4, 9, 10, 30));
         visit2.setName("Surname2");
         visit2.setSpecies("cat");
         visit2.setPurpose("recognition");
 
         Visit visit3 = new Visit();
-        visit3.setDate(LocalDateTime.of(2016,4,13,14,0));
+        visit3.setDate(LocalDateTime.of(2016, 4, 13, 14, 0));
         visit3.setName("Surname1");
         visit3.setSpecies("dog");
         visit3.setPurpose("recognition");
-
 
 
         List<Visit> visitList = new ArrayList<>();
@@ -58,7 +58,6 @@ public class Main {
         visitList.add(visit3);
         visitList.sort((v1, v2) -> v1.getDate().compareTo(v2.getDate()));
 
-  //      get("/visit", (reg,res) -> visitList);
         get("/registering_visit", (req, res) -> {
             Map<String, Object> visitModel = new HashMap<>();
             visitModel.put("registering_visits", visit1);
@@ -84,9 +83,21 @@ public class Main {
 
         get("/visit", (req, res) -> {
             Map<String, Object> registering_visitModel = new HashMap<>();
-            registering_visitModel.put("visits", visitList);
+            registering_visitModel.put("visits", readFromDb());
             return new ModelAndView(registering_visitModel, "visit");
         }, templateEngine);
+    }
+
+    private static List<Visit> readFromDb() {
+        JdbcTemplate template = DbAccess.getTemplate();
+        return template.query("select visitDate, name, species, purpose from visits", (rs, rowNum) -> {
+            Visit visit = new Visit();
+            visit.setDate(rs.getTimestamp(1).toLocalDateTime());
+            visit.setName(rs.getString(2));
+            visit.setSpecies(rs.getString(3));
+            visit.setPurpose(rs.getString(4));
+            return visit;
+        });
     }
 
     private static void saveToDb(Visit visit) {
