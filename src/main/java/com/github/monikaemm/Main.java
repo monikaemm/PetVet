@@ -26,8 +26,8 @@ public class Main {
         
         Visit visit2 = new Visit();
         visit2.setDate(LocalDateTime.of(2016,4,10,15,30));
-        visit2.setName("Surname1");
-        visit2.setSpecies("dog");
+        visit2.setName("Surname2");
+        visit2.setSpecies("cat");
         visit2.setPurpose("recognition");
         
         Visit visit3 = new Visit();
