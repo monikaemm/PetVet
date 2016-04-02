@@ -63,6 +63,20 @@ public class Main {
             visitModel.put("registering_visits", visit1);
             return new ModelAndView(visitModel, "registering_visit");
         }, templateEngine);
+        post("/registering_visit", (req, res) -> {
+            String ownerName = req.queryParams("name");
+            String speciesName = req.queryParams("species");
+            String purposeName = req.queryParams("purpose");
+            String dateName = req.queryParams("date");
+            Visit visit = new Visit();
+            visit.setName(ownerName);
+            visit.setSpecies(speciesName);
+            visit.setPurpose(purposeName);
+            visit.setDate(LocalDateTime.parse(dateName, Visit.formatter));
+            visitList.add(visit);
+            res.redirect("/visit");
+            return "";
+        });
 
         get("/visit", (req, res) -> {
             Map<String, Object> registering_visitModel = new HashMap<>();

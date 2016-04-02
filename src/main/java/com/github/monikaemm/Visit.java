@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * Created by Monika Hołysz on 02.04.2016.
  */
 public class Visit {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private LocalDateTime date;
     private String name;
     private String species;
