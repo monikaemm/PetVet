@@ -43,4 +43,13 @@ public class Visit {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
+
+    @Override
+    public String toString() {
+        return "" + date +
+                " " + name + ", " +
+                " " + species + ", " +
+                "purpose: " + purpose + " ";
+
+    }
 }
