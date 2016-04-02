@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PetVet</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css"/>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+
+<div class="jumbotron">
+    <ul th:each="visit: ${visits}">
+        <li th:text="${visit}"></li>
+    </ul>
+</div>
+
+
+</body>
+</html>

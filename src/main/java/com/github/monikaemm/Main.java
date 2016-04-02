@@ -56,6 +56,11 @@ public class Main {
         visitList.add(visit2);
         visitList.add(visit3);
 
-        get("/visit", (reg,res) -> visitList);
+  //      get("/visit", (reg,res) -> visitList);
+        get("/visit", (req, res) -> {
+            Map<String, Object> visitModel = new HashMap<>();
+            visitModel.put("visits", visitList);
+            return new ModelAndView(visitModel, "visit");
+        }, templateEngine);
     }
 }
