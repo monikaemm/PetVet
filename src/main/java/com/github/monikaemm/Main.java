@@ -90,7 +90,7 @@ public class Main {
 
     private static List<Visit> readFromDb() {
         JdbcTemplate template = DbAccess.getTemplate();
-        return template.query("select visitDate, name, species, purpose from visits", (rs, rowNum) -> {
+        return template.query("select visitDate, name, species, purpose from visits order by visitDate", (rs, rowNum) -> {
             Visit visit = new Visit();
             visit.setDate(rs.getTimestamp(1).toLocalDateTime());
             visit.setName(rs.getString(2));
