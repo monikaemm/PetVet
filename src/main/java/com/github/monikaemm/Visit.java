@@ -18,6 +18,10 @@ public class Visit {
     public LocalDateTime getDate() {
         return date;
     }
+    public String getFormattedDate() {
+        return date.format(formatter);
+    }
+
 
     public void setDate(LocalDateTime date) {
         this.date = date;
@@ -49,7 +53,7 @@ public class Visit {
 
     @Override
     public String toString() {
-        return "" + date.format(formatter) +
+        return getFormattedDate() +
                 " " + name + ", " +
                 " " + species + ", " +
                 "purpose: " + purpose + " ";

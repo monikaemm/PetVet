@@ -9,9 +9,21 @@
 <body class="container">
 
 <div class="jumbotron">
-    <ul th:each="visit: ${visits}">
-        <li th:text="${visit}"></li>
-    </ul>
+
+    <table class="table">
+        <tr>
+            <th>Data</th>
+            <th>Nazwisko</th>
+            <th>Zwierzę</th>
+            <th>Cel wizyty</th>
+        </tr>
+        <tr th:each="visit: ${visits}">
+            <td th:text="${visit.formattedDate}"></td>
+            <td th:text="${visit.name}"></td>
+            <td th:text="${visit.species}"></td>
+            <td th:text="${visit.purpose}"></td>
+        </tr>
+    </table>
 </div>
 
 
