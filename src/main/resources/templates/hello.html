@@ -2,10 +2,20 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>PetVet</title>
+    <link  rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link  rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css" />
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body class="container">
 
-<h1 th:text="${message}"></h1>
+<div class="jumbotron">
+    <h1 th:text="${message}"></h1>
+
+    <a class="btn btn-primary btn-lg" href="#" role="button">
+        <i class="glyphicon glyphicon-ok"></i>
+        Let's start!
+    </a>
+</div>
 
 </body>
 </html>

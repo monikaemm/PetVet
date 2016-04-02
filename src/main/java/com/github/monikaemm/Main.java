@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
 
 /**
  * Created by Monika Hołysz on 02.04.2016.
@@ -19,6 +20,7 @@ public class Main {
                 .map(Integer::parseInt)
                 .orElse(4567);
         port(portNumber);
+        staticFileLocation("public");
 
         ThymeleafTemplateEngine templateEngine = new ThymeleafTemplateEngine();
 
