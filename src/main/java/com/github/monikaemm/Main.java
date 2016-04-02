@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
@@ -74,6 +75,9 @@ public class Main {
             visit.setPurpose(purposeName);
             visit.setDate(LocalDateTime.parse(dateName, Visit.formatter));
             visitList.add(visit);
+
+            saveToDb(visit);
+
             res.redirect("/visit");
             return "";
         });
@@ -83,5 +87,14 @@ public class Main {
             registering_visitModel.put("visits", visitList);
             return new ModelAndView(registering_visitModel, "visit");
         }, templateEngine);
+    }
+
+    private static void saveToDb(Visit visit) {
+        JdbcTemplate template = DbAccess.getTemplate();
+        template.update("insert into visits(visitDate, name, species, purpose) values(?,?,?,?)",
+                visit.getDate(),
+                visit.getName(),
+                visit.getSpecies(),
+                visit.getPurpose());
     }
 }
