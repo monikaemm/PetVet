@@ -2,14 +2,17 @@ package com.github.monikaemm;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Monika Hołysz on 02.04.2016.
  */
 public class Visit {
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private LocalDateTime date;
     private String name;
     private String species;
+
     private String purpose;
 
     public LocalDateTime getDate() {
@@ -42,5 +45,14 @@ public class Visit {
 
     public void setPurpose(String purpose) {
         this.purpose = purpose;
+    }
+
+    @Override
+    public String toString() {
+        return "" + date.format(formatter) +
+                " " + name + ", " +
+                " " + species + ", " +
+                "purpose: " + purpose + " ";
+
     }
 }
