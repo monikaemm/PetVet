@@ -1,9 +1,11 @@
 package com.github.monikaemm;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javassist.NotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -27,6 +29,12 @@ public class Main {
 
         ThymeleafTemplateEngine templateEngine = new ThymeleafTemplateEngine();
 
+
+
+
+
+
+
         get("/hello", (req, res) -> {
             Map<String, Object> helloModel = new HashMap<>();
             helloModel.put("message", "Hello, World!");
@@ -36,9 +44,12 @@ public class Main {
 
         get("/registering_visit", (req, res) -> {
             Map<String, Object> visitModel = new HashMap<>();
+
             return new ModelAndView(visitModel, "registering_visit");
+
         }, templateEngine);
         post("/registering_visit", (req, res) -> {
+
             Visit visit = new Visit();
             visit.setName(req.queryParams("name"));
             visit.setSpecies(req.queryParams("species"));
@@ -49,6 +60,7 @@ public class Main {
 
             res.redirect("/visit");
             return "";
+
         });
 
         get("/visit", (req, res) -> {
@@ -56,6 +68,19 @@ public class Main {
             registering_visitModel.put("visits", readFromDb());
             return new ModelAndView(registering_visitModel, "visit");
         }, templateEngine);
+
+
+
+        exception(NotFoundException.class, (DateTimeParseException, req, res) -> {
+            res.status(500);
+            res.body("Resource not found");
+            res.redirect("/visit");
+        });
+
+
+
+
+
     }
 
     private static List<Visit> readFromDb() {
