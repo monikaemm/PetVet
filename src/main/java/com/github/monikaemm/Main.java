@@ -89,7 +89,6 @@ public class Main {
         System.out.println(user2.type);
 
 
-
     }
 
     private static List<Visit> readFromDb() {
