@@ -2,6 +2,7 @@ package com.github.monikaemm;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static spark.Spark.*;
  */
 public class Main {
     public static void main(String[] args) {
+
         int portNumber = Optional.ofNullable(System.getProperty("server.port"))
                 .map(Integer::parseInt)
                 .orElse(4567);
@@ -50,15 +52,17 @@ public class Main {
         }, templateEngine);
         post("/registering_visit", (req, res) -> {
 
-            Visit visit = new Visit();
-            visit.setName(req.queryParams("name"));
-            visit.setSpecies(req.queryParams("species"));
-            visit.setPurpose(req.queryParams("purpose"));
-            visit.setDate(LocalDateTime.parse(req.queryParams("date"), Visit.formatter));
+    //        try {
+                Visit visit = new Visit();
+                visit.setName(req.queryParams("name"));
+                visit.setSpecies(req.queryParams("species"));
+                visit.setPurpose(req.queryParams("purpose"));
+                visit.setDate(LocalDateTime.parse(req.queryParams("date"), Visit.formatter));
 
-            saveToDb(visit);
+                saveToDb(visit);
 
-            res.redirect("/visit");
+                res.redirect("/visit");
+ //           }catch(DateTimeParseException e){res.redirect("/registering_visit");}
             return "";
 
         });
@@ -71,13 +75,18 @@ public class Main {
 
 
 
-        exception(NotFoundException.class, (DateTimeParseException, req, res) -> {
+        exception(DateTimeParseException.class, (e, req, res) -> {
             res.status(500);
             res.body("Resource not found");
-            res.redirect("/visit");
+    //        res.redirect("/visit");
         });
 
 
+        User user1 = new User(User.Type.ADMINISTRATOR);
+        User user2 = new User(User.Type.DOCTOR);
+
+        System.out.println(user1.type);
+        System.out.println(user2.type);
 
 
 
@@ -103,4 +112,5 @@ public class Main {
                 visit.getSpecies(),
                 visit.getPurpose());
     }
+
 }
