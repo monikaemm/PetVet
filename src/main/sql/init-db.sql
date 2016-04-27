@@ -6,3 +6,11 @@ CREATE TABLE visits (
      species VARCHAR(100) NOT NULL,
      purpose MEDIUMTEXT
 );
+
+CREATE TABLE logins (
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     name VARCHAR(100) NOT NULL,
+     surname VARCHAR(100) NOT NULL,
+     log VARCHAR(100) NOT NULL,
+     password VARCHAR(100) NOT NULL,
+);

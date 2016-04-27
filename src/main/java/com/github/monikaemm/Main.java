@@ -73,6 +73,33 @@ public class Main {
             return new ModelAndView(registering_visitModel, "visit");
         }, templateEngine);
 
+        get("/login", (req, res) -> {
+            Map<String, Object> loginModel = new HashMap<>();
+
+            return new ModelAndView(loginModel, "login");
+
+        }, templateEngine);
+        post("/login", (req, res) -> {
+
+            //        try {
+            User user = new User();
+            user.setName(req.queryParams("name"));
+            user.setSurname(req.queryParams("surname"));
+            user.setLog(req.queryParams("log"));
+            user.setPassword(req.queryParams("password"));
+
+            saveToDbLogin(user);
+
+            res.redirect("/visit");
+            //           }catch(DateTimeParseException e){res.redirect("/registering_visit");}
+            return "";
+
+        });
+
+
+
+
+
 
 
         exception(DateTimeParseException.class, (e, req, res) -> {
@@ -82,11 +109,11 @@ public class Main {
         });
 
 
-        User user1 = new User(User.Type.ADMINISTRATOR);
-        User user2 = new User(User.Type.DOCTOR);
+//        User user1 = new User(User.Type.ADMINISTRATOR);
+//        User user2 = new User(User.Type.DOCTOR);
 
-        System.out.println(user1.type);
-        System.out.println(user2.type);
+//        System.out.println(user1.type);
+//        System.out.println(user2.type);
 
 
     }
@@ -112,4 +139,12 @@ public class Main {
                 visit.getPurpose());
     }
 
+    private static void saveToDbLogin(User user) {
+        JdbcTemplate template = DbAccess.getTemplate();
+        template.update("insert into logins(name, surname, log, password) values(?,?,?,?)",
+                user.getName(),
+                user.getSurname(),
+                user.getLog(),
+                user.getPassword());
+    }
 }
