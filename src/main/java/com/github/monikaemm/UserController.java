@@ -34,6 +34,15 @@ public class UserController {
         return new ModelAndView(loginModel, "registration");
     }
 
+    public Object authenticateUser(Request req, Response res){
+        String zmienna = req.queryParams("log");
+        String zmienna1 = req.queryParams("password");
+        System.out.println(zmienna);
+        System.out.println(zmienna1);
+        System.out.println("authenticate");
+        return null;
+    }
+
     private static void saveToDbLogin(User user) {
         JdbcTemplate template = DbAccess.getTemplate();
         template.update("insert into logins(name, surname, log, password) values(?,?,?,?)",

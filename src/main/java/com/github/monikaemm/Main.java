@@ -44,6 +44,7 @@ public class Main {
         get("/visit", visitController::visitsList, templateEngine);
 
         get("/login", userController::loginView, templateEngine);
+        post("/login", userController::authenticateUser);
         post("/registration", userController::registerUser);
         get("/registration", userController::registrationView, templateEngine);
 
@@ -51,8 +52,5 @@ public class Main {
             res.status(500);
             res.body("Resource not found");
         });
-
-
     }
-
 }
