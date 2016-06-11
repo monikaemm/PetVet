@@ -92,15 +92,6 @@ public class Main {
 
     }
 
-    private static void saveToDb(Visit visit) {
-        JdbcTemplate template = DbAccess.getTemplate();
-        template.update("insert into visits(visitDate, name, species, purpose) values(?,?,?,?)",
-                visit.getDate(),
-                visit.getName(),
-                visit.getSpecies(),
-                visit.getPurpose());
-    }
-
     private static void saveToDbLogin(User user) {
         JdbcTemplate template = DbAccess.getTemplate();
         template.update("insert into logins(name, surname, log, password) values(?,?,?,?)",
