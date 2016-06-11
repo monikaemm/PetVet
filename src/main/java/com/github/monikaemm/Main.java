@@ -32,6 +32,7 @@ public class Main {
         ThymeleafTemplateEngine templateEngine = new ThymeleafTemplateEngine();
 
         VisitController visitController = new VisitController();
+        UserController userController = new UserController();
 
         get("/", (req, res) -> {
             res.redirect("/login");
@@ -42,62 +43,16 @@ public class Main {
         post("/registering_visit", visitController::registerVisit);
         get("/visit", visitController::visitsList, templateEngine);
 
-        get("/login", (req, res) -> {
-            Map<String, Object> loginModel = new HashMap<>();
-
-            return new ModelAndView(loginModel, "login");
-
-        }, templateEngine);
-        post("/login", (req, res) -> {
-
-            //        try {
-            User user = new User();
-            user.setName(req.queryParams("name"));
-            user.setSurname(req.queryParams("surname"));
-            user.setLog(req.queryParams("log"));
-            user.setPassword(req.queryParams("password"));
-
-            saveToDbLogin(user);
-
-            res.redirect("/visit");
-            //           }catch(DateTimeParseException e){res.redirect("/registering_visit");}
-            return "";
-
-        });
-
-        get("/registration", (req, res) -> {
-            Map<String, Object> loginModel = new HashMap<>();
-
-            return new ModelAndView(loginModel, "registration");
-
-        }, templateEngine);
-
-
-
-
+        get("/login", userController::loginView, templateEngine);
+        post("/registration", userController::registerUser);
+        get("/registration", userController::registrationView, templateEngine);
 
         exception(DateTimeParseException.class, (e, req, res) -> {
             res.status(500);
             res.body("Resource not found");
-    //        res.redirect("/visit");
         });
 
 
-//        User user1 = new User(User.Type.ADMINISTRATOR);
-//        User user2 = new User(User.Type.DOCTOR);
-
-//        System.out.println(user1.type);
-//        System.out.println(user2.type);
-
-
     }
 
-    private static void saveToDbLogin(User user) {
-        JdbcTemplate template = DbAccess.getTemplate();
-        template.update("insert into logins(name, surname, log, password) values(?,?,?,?)",
-                user.getName(),
-                user.getSurname(),
-                user.getLog(),
-                user.getPassword());
-    }
 }
