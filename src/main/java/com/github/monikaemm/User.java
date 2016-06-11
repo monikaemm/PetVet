@@ -11,19 +11,11 @@ public class User {
     private String surname;
     private String log;
     private String password;
-
+    private Type type;
 
     public enum Type {ADMINISTRATOR, DOCTOR, CLIENT}
 
     Type type;
-
-    public User() {
-
-    }
-
-    public User(Type type) {
-        this.type = type;
-    }
 
     public String getName() {
         return name;
@@ -55,6 +47,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 
