@@ -15,8 +15,6 @@ public class User {
 
     public enum Type {ADMINISTRATOR, DOCTOR, CLIENT}
 
-    Type type;
-
     public String getName() {
         return name;
     }

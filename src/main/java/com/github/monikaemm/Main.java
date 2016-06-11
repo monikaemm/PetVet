@@ -38,13 +38,6 @@ public class Main {
         });
 
 
-        get("/hello", (req, res) -> {
-            Map<String, Object> helloModel = new HashMap<>();
-            helloModel.put("message", "Hello, World!");
-            return new ModelAndView(helloModel, "hello");
-        }, templateEngine);
-
-
         get("/registering_visit", (req, res) -> {
             Map<String, Object> visitModel = new HashMap<>();
 
@@ -68,11 +61,8 @@ public class Main {
 
         });
 
-        get("/visit", (req, res) -> {
-            Map<String, Object> registering_visitModel = new HashMap<>();
-            registering_visitModel.put("visits", readFromDb());
-            return new ModelAndView(registering_visitModel, "visit");
-        }, templateEngine);
+        VisitController visitController = new VisitController();
+        get("/visit", visitController::visitsList, templateEngine);
 
         get("/login", (req, res) -> {
             Map<String, Object> loginModel = new HashMap<>();
@@ -122,18 +112,6 @@ public class Main {
 //        System.out.println(user2.type);
 
 
-    }
-
-    private static List<Visit> readFromDb() {
-        JdbcTemplate template = DbAccess.getTemplate();
-        return template.query("select visitDate, name, species, purpose from visits order by visitDate", (rs, rowNum) -> {
-            Visit visit = new Visit();
-            visit.setDate(rs.getTimestamp(1).toLocalDateTime());
-            visit.setName(rs.getString(2));
-            visit.setSpecies(rs.getString(3));
-            visit.setPurpose(rs.getString(4));
-            return visit;
-        });
     }
 
     private static void saveToDb(Visit visit) {
