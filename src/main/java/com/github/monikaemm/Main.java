@@ -31,37 +31,15 @@ public class Main {
 
         ThymeleafTemplateEngine templateEngine = new ThymeleafTemplateEngine();
 
+        VisitController visitController = new VisitController();
 
         get("/", (req, res) -> {
             res.redirect("/login");
             return null;
         });
 
-
-        get("/registering_visit", (req, res) -> {
-            Map<String, Object> visitModel = new HashMap<>();
-
-            return new ModelAndView(visitModel, "registering_visit");
-
-        }, templateEngine);
-        post("/registering_visit", (req, res) -> {
-
-    //        try {
-                Visit visit = new Visit();
-                visit.setName(req.queryParams("name"));
-                visit.setSpecies(req.queryParams("species"));
-                visit.setPurpose(req.queryParams("purpose"));
-                visit.setDate(LocalDateTime.parse(req.queryParams("date"), Visit.formatter));
-
-                saveToDb(visit);
-
-                res.redirect("/visit");
- //           }catch(DateTimeParseException e){res.redirect("/registering_visit");}
-            return "";
-
-        });
-
-        VisitController visitController = new VisitController();
+        get("/registering_visit", visitController::registrationView, templateEngine);
+        post("/registering_visit", visitController::registerVisit);
         get("/visit", visitController::visitsList, templateEngine);
 
         get("/login", (req, res) -> {
