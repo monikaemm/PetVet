@@ -32,9 +32,10 @@ public class Main {
         ThymeleafTemplateEngine templateEngine = new ThymeleafTemplateEngine();
 
 
-
-
-
+        get("/", (req, res) -> {
+            res.redirect("/login");
+            return null;
+        });
 
 
         get("/hello", (req, res) -> {
@@ -96,7 +97,12 @@ public class Main {
 
         });
 
+        get("/registration", (req, res) -> {
+            Map<String, Object> loginModel = new HashMap<>();
 
+            return new ModelAndView(loginModel, "registration");
+
+        }, templateEngine);
 
 
 
