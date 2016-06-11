@@ -44,6 +44,7 @@ public class Main {
         get("/visit", visitController::visitsList, templateEngine);
 
         get("/login", userController::loginView, templateEngine);
+        get("/logout", userController::logout);
         post("/login", userController::authenticateUser);
         post("/registration", userController::registerUser);
         get("/registration", userController::registrationView, templateEngine);

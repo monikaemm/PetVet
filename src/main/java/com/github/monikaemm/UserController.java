@@ -19,6 +19,12 @@ public class UserController {
         return new ModelAndView(loginModel, "login");
     }
 
+    public String logout(Request req, Response res) {
+        req.session().invalidate();
+        res.redirect("/login");
+        return null;
+    }
+
     public String registerUser(Request req, Response res) {
         User user = new User();
         user.setName(req.queryParams("name"));

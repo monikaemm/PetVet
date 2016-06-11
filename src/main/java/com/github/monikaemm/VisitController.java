@@ -16,8 +16,9 @@ import java.util.Map;
 public class VisitController {
     public ModelAndView visitsList(Request req, Response res) {
         Map<String, Object> registering_visitModel = new HashMap<>();
-        registering_visitModel.put("visits", readFromDb());
-        registering_visitModel.put("user", req.session().attribute("user"));
+        User user = req.session().attribute("user");
+        registering_visitModel.put("visits", readFromDb(user));
+        registering_visitModel.put("user", user);
         return new ModelAndView(registering_visitModel, "visit");
     }
 
@@ -41,16 +42,16 @@ public class VisitController {
         return new ModelAndView(visitModel, "registering_visit");
     }
 
-    private static List<Visit> readFromDb() {
+    private static List<Visit> readFromDb(User user) {
         JdbcTemplate template = DbAccess.getTemplate();
-        return template.query("select visitDate, name, species, purpose from visits order by visitDate", (rs, rowNum) -> {
+        return template.query("select visitDate, name, species, purpose from visits where user_id = ? order by visitDate", (rs, rowNum) -> {
             Visit visit = new Visit();
             visit.setDate(rs.getTimestamp(1).toLocalDateTime());
             visit.setName(rs.getString(2));
             visit.setSpecies(rs.getString(3));
             visit.setPurpose(rs.getString(4));
             return visit;
-        });
+        }, user.getId());
     }
 
     private static void saveToDb(Visit visit, User user) {
