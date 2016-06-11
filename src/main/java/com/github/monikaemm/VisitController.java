@@ -17,6 +17,7 @@ public class VisitController {
     public ModelAndView visitsList(Request req, Response res) {
         Map<String, Object> registering_visitModel = new HashMap<>();
         registering_visitModel.put("visits", readFromDb());
+        registering_visitModel.put("user", req.session().attribute("user"));
         return new ModelAndView(registering_visitModel, "visit");
     }
 
