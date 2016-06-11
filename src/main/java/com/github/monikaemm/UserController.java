@@ -6,6 +6,7 @@ import spark.Request;
 import spark.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,17 +30,26 @@ public class UserController {
         return null;
     }
 
-    public ModelAndView registrationView(Request req, Response res){
+    public ModelAndView registrationView(Request req, Response res) {
         Map<String, Object> loginModel = new HashMap<>();
         return new ModelAndView(loginModel, "registration");
     }
 
-    public Object authenticateUser(Request req, Response res){
-        String zmienna = req.queryParams("log");
-        String zmienna1 = req.queryParams("password");
-        System.out.println(zmienna);
-        System.out.println(zmienna1);
-        System.out.println("authenticate");
+    public Object authenticateUser(Request req, Response res) {
+        JdbcTemplate template = DbAccess.getTemplate();
+        List<User> resultUser = template.query("select id, name, surname, log, type from users where log = ? and password = ?;", (rs, rowNum) -> {
+            User users = new User();
+            users.setName(rs.getString(2));
+            users.setSurname(rs.getString(3));
+            users.setLog(rs.getString(4));
+            return users;
+        }, req.queryParams("log"),req.queryParams("password"));
+        if(!resultUser.isEmpty()) {
+            res.redirect("/visit");
+        }
+        else{
+            res.redirect("/login");
+        }
         return null;
     }
 

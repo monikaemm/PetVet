@@ -55,5 +55,14 @@ public class User {
         this.type = type;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", log='" + log + '\'' +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
