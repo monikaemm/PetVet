@@ -1,5 +1,7 @@
 package com.github.monikaemm;
 
+import java.util.Objects;
+
 /**
  * Created by Monika Hołysz on 26.04.2016.
  */
@@ -12,8 +14,28 @@ public class User {
     private String log;
     private String password;
     private Type type;
+    private int id;
 
-    public enum Type {ADMINISTRATOR, DOCTOR, CLIENT}
+    public enum Type {
+        ADMINISTRATOR, DOCTOR, CLIENT;
+
+        public static Type forString(String s) {
+            for (Type t: values()) {
+                if (Objects.equals(t.name(), s)){
+                    return t;
+                }
+            }
+            return null;
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

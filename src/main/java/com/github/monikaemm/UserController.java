@@ -37,15 +37,19 @@ public class UserController {
 
     public Object authenticateUser(Request req, Response res) {
         JdbcTemplate template = DbAccess.getTemplate();
-        List<User> listUser = template.query("select id, name, surname, log, type from users where log = ? and password = ?;", (rs, rowNum) -> {
-            User users = new User();
-            users.setName(rs.getString(2));
-            users.setSurname(rs.getString(3));
-            users.setLog(rs.getString(4));
-            return users;
+        List<User> listUsers = template.query("select id, name, surname, log, type from users where log = ? and password = ?;", (rs, rowNum) -> {
+            User user = new User();
+            user.setId(rs.getInt(1));
+            user.setName(rs.getString(2));
+            user.setSurname(rs.getString(3));
+            user.setLog(rs.getString(4));
+            String typeName = rs.getString(5);
+            User.Type type = User.Type.forString(typeName);
+            user.setType(type);
+            return user;
         }, req.queryParams("log"),req.queryParams("password"));
-        if(!listUser.isEmpty()) {
-            req.session(true).attribute("user",listUser.get(0));
+        if(!listUsers.isEmpty()) {
+            req.session(true).attribute("user",listUsers.get(0));
             res.redirect("/visit");
         }
         else{

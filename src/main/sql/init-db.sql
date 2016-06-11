@@ -4,7 +4,8 @@ CREATE TABLE visits (
      visitDate TIMESTAMP NOT NULL,
      name VARCHAR(100) NOT NULL,
      species VARCHAR(100) NOT NULL,
-     purpose MEDIUMTEXT
+     purpose MEDIUMTEXT,
+     user_id INT
 );
 
 CREATE TABLE users (

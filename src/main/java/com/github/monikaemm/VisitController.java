@@ -28,7 +28,8 @@ public class VisitController {
         visit.setPurpose(req.queryParams("purpose"));
         visit.setDate(LocalDateTime.parse(req.queryParams("date"), Visit.formatter));
 
-        saveToDb(visit);
+        User user = req.session().attribute("user");
+        saveToDb(visit, user);
 
         res.redirect("/visit");
 
@@ -52,12 +53,14 @@ public class VisitController {
         });
     }
 
-    private static void saveToDb(Visit visit) {
+    private static void saveToDb(Visit visit, User user) {
         JdbcTemplate template = DbAccess.getTemplate();
-        template.update("insert into visits(visitDate, name, species, purpose) values(?,?,?,?)",
+        template.update("insert into visits(visitDate, name, species, purpose, user_id) values(?,?,?,?,?)",
                 visit.getDate(),
                 visit.getName(),
                 visit.getSpecies(),
-                visit.getPurpose());
+                visit.getPurpose(),
+                user.getId());
+
     }
 }
