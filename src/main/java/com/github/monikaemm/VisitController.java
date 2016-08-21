@@ -27,7 +27,7 @@ public class VisitController {
         visit.setName(req.queryParams("name"));
         visit.setSpecies(req.queryParams("species"));
         visit.setPurpose(req.queryParams("purpose"));
-        visit.setDate(LocalDateTime.parse(req.queryParams("date"), Visit.formatter));
+        visit.setDate(getDate(req));
 
         User user = req.session().attribute("user");
         saveToDb(visit, user);
@@ -35,6 +35,17 @@ public class VisitController {
         res.redirect("/visit");
 
         return null;
+    }
+
+    private LocalDateTime getDate(Request req) {
+
+        int year = Integer.parseInt(req.queryParams("year"));
+        int month = Integer.parseInt(req.queryParams("month"));
+        int day = Integer.parseInt(req.queryParams("day"));
+        int hour = Integer.parseInt(req.queryParams("hour"));
+        int minutes = Integer.parseInt(req.queryParams("minutes"));
+
+        return LocalDateTime.of(year, month, day, hour, minutes);
     }
 
     public ModelAndView registrationView(Request req, Response res){
