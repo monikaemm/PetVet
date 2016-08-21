@@ -13,11 +13,29 @@
 <div class="jumbotron">
 
     <form class="visit_registration" action="/registering_visit" method="post">
-        <div><label>Nazwisko</label> <input name="name" align="right"/></div>
-        <div><label>Gatunek zwierzęcia</label> <input name="species" align="right"/></div>
-        <div><label>Cel wizyty</label> <input name="purpose" align="right"/></div>
-        <div class="date"><label>Data</label><input name="day" placeholder="DD" align="right"/> - <input name="month" placeholder="MM" align="right"/> - <input name="year" placeholder="YYYY" align="right"/></div>
-        <div class="time"><label>Godzina</label><input name="hour" placeholder="HH" align="right"/> : <input name="minutes" placeholder="MM" align="right"/></div>
+        <div>
+            <label>Nazwisko</label>
+            <input name="name" align="right"/>
+        </div>
+        <div>
+            <label>Gatunek zwierzęcia</label>
+            <input name="species" align="right"/>
+            </div>
+        <div>
+            <label>Cel wizyty</label>
+            <input name="purpose" align="right"/>
+        </div>
+        <div class="date">
+            <label>Data</label>
+            <input name="day" placeholder="DD" align="right"/> -
+            <input name="month" placeholder="MM" align="right"/> -
+            <input name="year" placeholder="YYYY" align="right"/>
+        </div>
+        <div class="time">
+            <label>Godzina</label>
+            <input name="hour" placeholder="HH" align="right"/> :
+            <input name="minutes" placeholder="MM" align="right"/>
+        </div>
 
         <button class="btn btn-primary btn-lg" type="submit">
             <i class="glyphicon glyphicon-ok"></i>
