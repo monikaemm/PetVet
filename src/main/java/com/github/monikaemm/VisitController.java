@@ -24,15 +24,8 @@ public class VisitController {
     }
 
     public Object registerVisit(Request req, Response res) {
-        Visit visit = new Visit();
-        visit.setName(req.queryParams("name"));
-        visit.setSpecies(req.queryParams("species"));
-        visit.setPurpose(req.queryParams("purpose"));
-        visit.setDate(getDate(req));
-        DayOfWeek dayOfWeek = visit.getDate().getDayOfWeek();
-        if(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY){
-            throw new IllegalArgumentException("Expected working day");
-        }
+        Visit visit = readVisit(req);
+        validateVisit(visit);
 
         User user = req.session().attribute("user");
         saveToDb(visit, user);
@@ -40,6 +33,26 @@ public class VisitController {
         res.redirect("/visit");
 
         return null;
+    }
+
+    private Visit readVisit(Request req) {
+        Visit visit = new Visit();
+        visit.setName(req.queryParams("name"));
+        visit.setSpecies(req.queryParams("species"));
+        visit.setPurpose(req.queryParams("purpose"));
+        visit.setDate(getDate(req));
+        return visit;
+    }
+
+    private void validateVisit(Visit visit) {
+        DayOfWeek dayOfWeek = visit.getDate().getDayOfWeek();
+        if(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY){
+            throw new IllegalArgumentException("Expected working day");
+        }
+        int visitColliding = countVisitsAt(visit.getDate());
+        if(visitColliding != 0){
+            throw new IllegalArgumentException("Expected free slot");
+        }
     }
 
     private LocalDateTime getDate(Request req) {
@@ -79,5 +92,9 @@ public class VisitController {
                 visit.getPurpose(),
                 user.getId());
 
+    }
+    private static int countVisitsAt(LocalDateTime dateTime){
+        JdbcTemplate template = DbAccess.getTemplate();
+        return template.queryForObject("SELECT COUNT(*) FROM visits WHERE visitDate=?",Integer.class,dateTime);
     }
 }
