@@ -49,9 +49,5 @@ public class Main {
         post("/registration", userController::registerUser);
         get("/registration", userController::registrationView, templateEngine);
 
-        exception(DateTimeParseException.class, (e, req, res) -> {
-            res.status(500);
-            res.body("Resource not found");
-        });
     }
 }

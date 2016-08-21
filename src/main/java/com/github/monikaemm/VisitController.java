@@ -5,6 +5,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,10 @@ public class VisitController {
         visit.setSpecies(req.queryParams("species"));
         visit.setPurpose(req.queryParams("purpose"));
         visit.setDate(getDate(req));
+        DayOfWeek dayOfWeek = visit.getDate().getDayOfWeek();
+        if(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY){
+            throw new IllegalArgumentException("Expected working day");
+        }
 
         User user = req.session().attribute("user");
         saveToDb(visit, user);
