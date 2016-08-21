@@ -12,16 +12,16 @@
 
 <div class="jumbotron">
 
-    <form class="login" action="/login" method="post">
+    <form class="user_registration" action="/registration" method="post">
         <div><label>Nazwisko</label> <input name="surname" align="right"/></div>
         <div><label>Imie</label> <input name="name" align="right"/></div>
         <div><label>Login</label> <input name="log" align="right"/></div>
-        <div><label>Hasło</label> <input name="password" align="right"/></div>
-        <div><label>Potwierdź Hasło</label> <input name="potwierdzPassword" align="right"/></div>
+        <div><label>Hasło</label> <input type="password" name="password" align="right"/></div>
+        <div><label>Potwierdź Hasło</label> <input type="password" name="potwierdzPassword" align="right"/></div>
 
         <button class="btn btn-primary btn-lg" type="submit">
             <i class="glyphicon glyphicon-ok"></i>
-            Zaloguj sie!
+            Zarejestruj sie!
         </button>
     </form>
 </div>

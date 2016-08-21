@@ -31,6 +31,7 @@ public class UserController {
         user.setSurname(req.queryParams("surname"));
         user.setLog(req.queryParams("log"));
         user.setPassword(req.queryParams("password"));
+        user.setType(User.Type.CLIENT);
         saveToDbLogin(user);
         res.redirect("/visit");
         return null;
@@ -66,10 +67,11 @@ public class UserController {
 
     private static void saveToDbLogin(User user) {
         JdbcTemplate template = DbAccess.getTemplate();
-        template.update("insert into logins(name, surname, log, password) values(?,?,?,?)",
+        template.update("insert into users(name, surname, log, password, type) values(?,?,?,?,?)",
                 user.getName(),
                 user.getSurname(),
                 user.getLog(),
-                user.getPassword());
+                user.getPassword(),
+                user.getType().toString());
     }
 }
