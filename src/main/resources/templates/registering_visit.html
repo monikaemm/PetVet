@@ -33,8 +33,18 @@
         </div>
         <div class="time">
             <label>Godzina</label>
-            <input name="hour" placeholder="HH" align="right"/> :
-            <input name="minutes" placeholder="MM" align="right"/>
+
+            <select name="hour">
+                <option th:each="i : ${#numbers.sequence( 9, 16)}"
+                        th:value="${ i }"
+                        th:text="${ i }">9</option>
+            </select>
+             :
+            <select name="minutes">
+                <option th:each="i : ${#numbers.sequence( 0, 45, 15)}"
+                        th:value="${ i }"
+                        th:text="${ i }">9</option>
+            </select>
         </div>
 
         <button class="btn btn-primary btn-lg" type="submit">
