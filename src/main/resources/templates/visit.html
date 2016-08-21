@@ -24,12 +24,19 @@
             <th>Nazwisko</th>
             <th>Zwierzę</th>
             <th>Cel wizyty</th>
+            <th>Usuń</th>
         </tr>
         <tr th:each="visit: ${visits}">
             <td th:text="${visit.formattedDate}"></td>
             <td th:text="${visit.name}"></td>
             <td th:text="${visit.species}"></td>
             <td th:text="${visit.purpose}"></td>
+            <td>
+                <form action="/delete-visit" method="post">
+                    <input type="hidden" value="${visit.id}"/>
+                    <button type="submit">X</button>
+                </form>
+            </td>
         </tr>
     </table>
 </div>
