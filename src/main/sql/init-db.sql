@@ -16,12 +16,3 @@ CREATE TABLE users (
      password VARCHAR(100) NOT NULL,
      type VARCHAR(20) NOT NULL
 );
-
-CREATE TABLE users (
-     id INT PRIMARY KEY AUTO_INCREMENT,
-     name VARCHAR(100) NOT NULL,
-     surname VARCHAR(100) NOT NULL,
-     log VARCHAR(100) NOT NULL UNIQUE,
-     password VARCHAR(100) NOT NULL,
-     type VARCHAR(20) NOT NULL
-);
