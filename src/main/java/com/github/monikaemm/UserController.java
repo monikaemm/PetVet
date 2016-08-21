@@ -33,7 +33,7 @@ public class UserController {
         user.setPassword(req.queryParams("password"));
         user.setType(User.Type.CLIENT);
         saveToDbLogin(user);
-        res.redirect("/visit");
+        res.redirect("/login");
         return null;
     }
 
