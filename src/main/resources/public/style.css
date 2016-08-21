@@ -1,3 +1,18 @@
 .visit_registration label{
 width: 200px;
 }
+
+.visit_registration .date input, .visit_registration .time input {
+width:30px;
+}
+.visit_registration .date input:last-child{
+width:60px;
+}
+
+.visit_registration input::-webkit-input-placeholder{
+text-align:center;
+}
+
+.visit_registration .date input:nth-child(2), .visit_registration .time input:nth-child(2) {
+    margin-left: 3.5px;
+}
